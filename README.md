@@ -4,7 +4,7 @@ Search papers on arxiv2bib and save as bibtex
 
 ## Installation
 ``
-pip install arxiv2bib
+pip install arxiv2bibpy
 ``
 
 ## Usage
