@@ -10,7 +10,7 @@ with open(cwd + "/README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    version="0.6",
+    version="0.7",
     include_package_data=True,
     name="arxiv2bibpy",
     author="Duong Nhu",

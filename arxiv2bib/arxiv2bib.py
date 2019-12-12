@@ -36,6 +36,15 @@ def parse_api_response(content):
         title = entry.find("title").text
         abstract = entry.find("summary").text
         entry_type = "article"
+
+        journal = entry.find("arxiv:journal_ref")
+        if journal:
+            journal = journal.text
+
+        doi = entry.find("arxiv:doi")
+        if doi:
+            doi = doi.text
+
         published = entry.find("published").text
         published_date = datetime.strptime(published, "%Y-%m-%dT%H:%M:%SZ")
         year = str(published_date.year)
@@ -45,8 +54,7 @@ def parse_api_response(content):
         for tag in author_tags:
             authors.append(tag.find("name").text)
 
-        papers.append(
-            dict(
+        paper = dict(
                 title=title,
                 abstract=abstract,
                 year=year,
@@ -54,8 +62,16 @@ def parse_api_response(content):
                 author=", ".join(authors),
                 ENTRYTYPE=entry_type,
                 ID=paper_id,
-            )
+                archivePrefix="arXiv",
         )
+
+        if journal:
+            paper["journal"] = journal
+
+        if doi:
+            paper["DOI"] = doi
+
+        papers.append(paper)
 
     return papers
 
